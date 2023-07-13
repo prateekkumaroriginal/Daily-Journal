@@ -1,8 +1,10 @@
-<div class="container">
-    <h3>
-        <%= posts[i].title %>
-    </h3>
+<%- include('partials/header') %>
+
+    <h1>
+        <%= post.title %>
+    </h1>
     <p>
-        <%= posts[i].text %>
+        <%= post.text %>
     </p>
-</div>
+
+    <%- include('partials/footer') %>
