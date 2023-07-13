@@ -44,7 +44,14 @@ app.post("/compose", (req, res) => {
     res.redirect("/");
 });
 
-
+app.get("/posts/:title", (req, res) => {
+    posts.forEach(post => {
+        if (post.title === req.params.title){
+            console.log(req.params.title);
+            res.send(req.params.title);
+        }
+    });
+});
 
 
 
