@@ -6,12 +6,13 @@
     </p>
 
     <% posts.forEach(post=> { %>
-        <div class="container">
+        <div class="container posts">
             <h3>
                 <%= post.title %>
             </h3>
             <p>
-                <%= post.text %>
+                <%= post.text.substring(0, 100) + "..." %>
+                    <a href="/posts/<%= post.title %>">Read More ></a>
             </p>
         </div>
         <% });%>
