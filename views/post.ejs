@@ -1,14 +1,19 @@
 <%- include('partials/header') %>
+    <div class="heading row">
+        <h1 class="col-sm-10">
+            <%= post.title %>
+        </h1>
 
-    <h1>
-        <%= post.title %>
-    </h1>
-    <span>
-        <%= post.date %>
-    </span>
-    <span>
-        <%= post.time %>
-    </span>
+        <div class="date-time col-sm-2">
+            <span id="date">
+                <%= post.date %>
+            </span><br>
+            <span id="time">
+                <%= post.time %>
+            </span>
+        </div>
+    </div>
+
     <p>
         <%= post.text %>
     </p>
