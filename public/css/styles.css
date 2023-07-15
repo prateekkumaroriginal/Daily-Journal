@@ -24,7 +24,7 @@
 }
 
 .footer {
-    position: sticky;
+    position: fixed;
     display: flex;
     text-align: center;
     bottom: 0;
@@ -44,4 +44,8 @@
 .date-time{
     margin: 5rem 0 2rem;
     font-weight: 900;
+}
+
+.posts:last-of-type{
+    margin-bottom: 6rem;
 }
