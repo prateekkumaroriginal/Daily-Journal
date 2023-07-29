@@ -49,3 +49,7 @@
 .posts:last-of-type{
     margin-bottom: 6rem;
 }
+
+.post{
+    overflow-wrap: anywhere;
+}
