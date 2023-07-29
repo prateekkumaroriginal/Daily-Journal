@@ -2,12 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
-const date = require(__dirname+'/date');
+const date = require(__dirname + '/date');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/dailyjournalDB').then(()=>{
+mongoose.connect('mongodb://127.0.0.1:27017/dailyjournalDB').then(() => {
     console.log('connected');
-}).catch((err)=>{
+}).catch((err) => {
     console.log(err);
 });
 
@@ -23,11 +23,36 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+const postSchema = mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        maxLength: 255,
+        minLength: 1,
+    },
+    text: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: String,
+        default: date.getDate(),
+    },
+    time: {
+        type: String,
+        default: date.getTime(),
+    },
+});
+
+const Post = mongoose.model("Post", postSchema);
+
 app.get("/", (req, res) => {
-    res.render("home", {
-        homeStartingContent: homeStartingContent,
-        posts: posts
-    });
+    Post.find({}).then((posts) => {
+        res.render("home", {
+            homeStartingContent: homeStartingContent,
+            posts: posts,
+        });
+    })
 });
 
 app.get("/about", (req, res) => {
@@ -46,26 +71,22 @@ app.post("/compose", (req, res) => {
     const post = {
         title: req.body.postTitle,
         text: req.body.postText,
-        date: date.getDate(),   
-        time: date.getTime()
     }
-    posts.push(post);
-    res.redirect("/");
+    if (post.title && post.text) {
+        Post.create(post).then(() => { res.redirect("/"); });
+    } else {
+        res.redirect("/");
+    }
 });
 
-app.get("/posts/:title", (req, res) => {
-    const requestedTitle = _.lowerCase(req.params.title);
-    posts.forEach(post => {
-        if (_.lowerCase(post.title) === requestedTitle){
-            res.render("post", {post: post});
-        }
+app.get("/posts/:postId", (req, res) => {
+    Post.findOne({ _id: req.params.postId }).then((post) => {
+        res.render("post", { post: post });
+    }).catch((err) => {
+        console.log(err);
+        res.render("404");
     });
 });
-
-
-
-
-
 
 app.listen(3000, function () {
     console.log("Server started on port http://127.0.0.1:3000");
