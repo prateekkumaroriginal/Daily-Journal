@@ -13,7 +13,8 @@
     letter-spacing: 5px;
 }
 
-.navbar-nav li a:hover {
+.navbar-nav li a:hover,
+.navbar-brand a:hover {
     color: #1abc9c !important;
     border-bottom: 5px solid #1abc9c;
     padding-bottom: 1rem;
@@ -52,4 +53,9 @@
 
 .post{
     overflow-wrap: anywhere;
+}
+
+.navbar-brand a{
+    text-decoration: none;
+    color: #777;
 }
